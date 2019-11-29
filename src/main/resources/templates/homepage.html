@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Expense App</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('/images/forestbridge.jpg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+</style>
+<body>
+
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    Aidyn
+  </div>
+  <div class="w3-display-topright w3-padding-medium w3-medium">
+      <div th:unless="${init}">
+            <span class="w3-text-red"><b>Splitwise not Connected </b></span>| <span><a href="/splitwise/url">Connect</a></span>
+      </div>
+      <div th:if="${init}">
+            <span class="w3-text-green"><b>Splitwise Connected </b></span> | <span th:text="${name}"/>
+            <p><a href="/dashboard">Continue to Dashboard</a></p>
+      </div>
+    
+    
+  </div>
+  <div class="w3-display-middle">
+    <h1 class="w3-jumbo w3-animate-top">Expense App</h1>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+    <p class="w3-large w3-center">Tracking all your Expenses</p>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+    2019
+  </div>
+</div>
+
+</body>
+</html>

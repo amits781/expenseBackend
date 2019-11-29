@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Raleway", sans-serif
+    }
+    .subExpense{
+        transition: all .5s ease;
+    }
+</style>
+
+<body class="w3-light-grey">
+
+    <!-- Top container -->
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+        <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
+            onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+        <span class="w3-bar-item w3-right">Home <a href="/homepage" ><i class="fa fa-sign-out"></i></a></span>
+    </div>
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+        <div class="w3-container w3-row">
+            <div class="w3-col s4">
+               <img th:if="${init}" src="/images/amit.jpg" class="w3-circle w3-margin-right" style="width:46px">
+      			<img th:unless="${init}" src="/images/avatar.png" class="w3-circle w3-margin-right" style="width:46px">
+            </div>
+            <div class="w3-col s8 w3-bar">
+		      <span>Welcome, <strong><span th:text="${name}"/></strong></span><br>
+		      <a href="/homepage" th:unless="${init}"><b>Splitwise not Connected </b></a>
+		      <span th:if="${init}" class="w3-text-green"><b>Splitwise Connected </b></span>
+		    </div>
+        </div>
+        <hr>
+        <div class="w3-container">
+            <h5>Dashboard</h5>
+        </div>
+        <div class="w3-bar-block">
+		    <a href="/dashboard" class="w3-bar-item w3-button w3-padding "><i class="fa fa-home"></i>  Overview</a>
+		    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-line-chart"></i>  Expense Data</a>
+		    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-gears"></i>  Uncategorized</a>
+		    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Categories</a>
+		    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-group"></i>  Friends</a><br><br>
+		  </div>
+    </nav>
+
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+        title="close side menu" id="myOverlay"></div>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+        <!-- Header -->
+        <header class="w3-container" style="padding-top:22px">
+            <h5><b><i class="fa fa-dashboard"></i> My Expenses</b></h5>
+        </header>
+
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter">
+                <div class="w3-container w3-red w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>52</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Messages</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-blue w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>99</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Views</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-teal w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>23</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Shares</h4>
+                </div>
+            </div>
+            <div class="w3-quarter">
+                <div class="w3-container w3-orange w3-text-white w3-padding-16">
+                    <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>50</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4>Users</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-panel">
+            <div class="w3-row-padding" style="margin:0 -16px">
+
+                <div>
+                    <h5>Feeds</h5>
+                    
+                    
+                    
+                    <div th:each="expense : ${expenses}" class="w3-white w3-border-top w3-border-bottom">
+                        <div th:onclick="'javascript:myFunction(' + ${expense.id} + ')'" class="w3-container w3-button" style="display: flex;">
+                            <div class="w3-padding" style="flex: 1;"><span th:text="${expense.description}"/></div>
+                            <div class="w3-padding" style="flex: 1"><span th:text="${expense.category}"/></div>
+                            <div class="w3-padding" style="flex: 1"><span th:text="${expense.myOwedShare}"/></div>
+                        </div>
+                        <form th:id="${expense.id}+'Form'" action="/category/update" method="post">
+                        <div th:id=${expense.id} class="w3-container subExpense w3-border-top" style="display: flex ; height: 0cm; visibility: hidden">
+                            	<input name="id"  type="hidden" th:value="${expense.id}">
+	                            <div class="subExpContainer w3-animate-left" style="flex: 1; display: none;">
+	                                <h4>ID: <span th:text="${expense.id}"/></h4>
+	                                <p>Description: <span th:text="${expense.description}"/></p>
+	                                <p>Category: <span style="margin:5px" th:id="${expense.id}+'CatSpan'"><span th:text="${expense.category}"/></span><span><input name="category" th:value="${expense.category}" th:id="${expense.id}+'CatInput'" type="text" style="display: none; height: 6mm;"></span><i th:id="${expense.id}+'EditButton'" style="color: rgb(0, 140, 255)" class='fa fa-edit' th:onclick="'javascript:myEditFunction(' + ${expense.id} + ')'"></i><i style="visibility:hidden;color: rgb(230, 99, 24)" th:id="${expense.id}+'CancleButton'" class='fa fa-close' th:onclick="'javascript:myCancleFunction(' + ${expense.id} + ')'"></i></p>
+	                                <p>Date: <span th:text="${expense.date}"/></p>
+	                            </div>
+	                            <div class="subExpContainer w3-animate-right" style="flex: 1; display: none;">
+	                                    <p>Total Cost: <span th:text="${expense.totalCost}"/></p>
+	                                    <p>Paid Share: <span th:text="${expense.myPaidShare}"/></p>
+	                                    <p>Your Share: <span th:text="${expense.myOwedShare}"/></p>
+	                            </div>
+	                          
+                        </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+       
+        <!-- End page content -->
+    </div>
+
+    <script>
+        // Get the Sidebar
+        var mySidebar = document.getElementById("mySidebar");
+
+        // Get the DIV with overlay effect
+        var overlayBg = document.getElementById("myOverlay");
+
+        // Toggle between showing and hiding the sidebar, and add overlay effect
+        function w3_open() {
+            if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+                overlayBg.style.display = "none";
+            } else {
+                mySidebar.style.display = 'block';
+                overlayBg.style.display = "block";
+            }
+        }
+        function myFunction(id) {
+            var x = document.getElementById(id);
+            if (x.style.height == "0cm") {
+                //x.className += " w3-show";
+                x.getElementsByClassName('subExpContainer')[0].style.display = "block";
+                x.getElementsByClassName('subExpContainer')[1].style.display = "block";
+                x.style.visibility = "visible";
+                x.style.height = "42mm";
+            } else {
+               // x.className = x.className.replace(" w3-show", "");
+               x.style.height = "0cm";
+               x.getElementsByClassName('subExpContainer')[0].style.display = "none";
+                x.getElementsByClassName('subExpContainer')[1].style.display = "none";
+               x.style.visibility = "hidden";
+            }
+        }
+        
+        function myEditFunction(id){
+            var spanItem = document.getElementById(id + 'CatSpan');
+            var inputItem = document.getElementById(id + 'CatInput');
+            var editButton = document.getElementById(id + 'EditButton');
+            var cancleButton = document.getElementById(id + 'CancleButton');
+            var form = document.getElementById(id + 'Form');
+            if(editButton.className == "fa fa-edit"){
+                spanItem.style.display="none";
+                inputItem.style.display = "inline";
+                editButton.className = "fa fa-check";
+                editButton.style.color = "rgb(6, 184, 0)";
+                cancleButton.style.visibility = "visible";
+            } else if (editButton.className == "fa fa-check"){
+            	document.forms[id + 'Form'].submit();
+			} else {
+                spanItem.style.display="inline";
+                inputItem.style.display = "none";
+                editButton.className = "fa fa-edit";
+                editButton.style.color = "rgb(0, 140, 255)";
+                cancleButton.style.visibility = "hidden";
+            }
+        }
+        
+        
+        function myCancleFunction(id){
+            var spanItem = document.getElementById(id + 'CatSpan');
+            var inputItem = document.getElementById(id + 'CatInput');
+            var editButton = document.getElementById(id + 'EditButton');
+            var cancleButton = document.getElementById(id + 'CancleButton');
+            var form = document.getElementById(id + 'Form');
+            
+                spanItem.style.display="inline";
+                inputItem.style.display = "none";
+                editButton.className = "fa fa-edit";
+                editButton.style.color = "rgb(0, 140, 255)";
+                cancleButton.style.visibility = "hidden";
+        }
+        
+        // Close the sidebar with the close button
+        function w3_close() {
+            mySidebar.style.display = "none";
+            overlayBg.style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
