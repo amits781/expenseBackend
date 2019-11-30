@@ -46,21 +46,10 @@ public class SplitwiseController extends BaseController {
 
   @GetMapping("/url")
   public String getAuthUrl() throws InterruptedException, ExecutionException, IOException {
-    // splitwise = new Splitwise("LkeSXZcNJmVi8jmyxBZEZw0bJl2SYEE5MQz3X2E2",
-    // "3SzfwJc1gTwbi3ftsf2nkrWzOLSaQUoRYqY1Qzwc");
     splitwise = new Splitwise(consumerKey, consumerSecret);
     String authorizationURL = splitwise.getAuthorizationUrl();
     return "<a href=" + authorizationURL + ">" + authorizationURL + "</a>";
   }
-
-  /*
-   * @PostMapping("/init") public void initLogin(@RequestParam String token) throws
-   * InterruptedException, ExecutionException, IOException {
-   * splitwise.getUtil().setAccessToken(token); OAuth1AccessToken accessToken = (OAuth1AccessToken)
-   * splitwise.getUtil().getAccessToken();
-   * splitwise.getUtil().setAccessToken(accessToken.getToken(), accessToken.getTokenSecret(),
-   * accessToken.getRawResponse() ); }
-   */
 
   @GetMapping("/init")
   public RedirectView initLoginDefault(@RequestParam String oauth_verifier,
