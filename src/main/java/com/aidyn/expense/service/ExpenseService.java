@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import com.aidyn.expense.dao.ExpenseDao;
 import com.aidyn.expense.dto.ExpenseDTO;
@@ -50,6 +51,11 @@ public class ExpenseService {
   private static JsonParser parser = new JsonParser();
   private static Gson gson = new Gson();
 
+  @Scheduled(fixedDelay = 60000)
+  public void scheduleFixedDelayTask() {
+      System.out.println("Fixed delay task - " + System.currentTimeMillis() / 1000);
+  }
+  
   /*
    * private JsonElement findCurrentUserEntry(JsonElement expenseUserDetails, Long id) { for
    * (JsonElement expenseUserJson : expenseUserDetails.getAsJsonObject().get("users")
